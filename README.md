@@ -1,265 +1,197 @@
-🚀 AutoRepoSync 
-# ⚡ AutoRepoSync Sajjad
+# ⚡ AutoRepoSync
 
-> Never forget to pull again.
+**Automatically keep your local Git repositories synchronized with their remote GitHub repositories — zero prompts, zero hassle.**
 
-**AutoRepoSync automatically keeps your local Git repositories synchronized with GitHub — silently in the background.**
-
-No prompts.  
-No manual pulls.  
-No "your branch is behind".
-
-Just open VS Code and your repo stays updated.
+![Version](https://img.shields.io/badge/version-1.0.0-blue)
+![VS Code](https://img.shields.io/badge/vscode-%5E1.85.0-blue)
+![License](https://img.shields.io/badge/license-MIT-green)
 
 ---
 
-## 🎬 Demo
+## 🎯 What It Does
 
-![AutoRepoSync Demo](screenshots/demo.gif)
+AutoRepoSync runs silently in the background and:
 
-Push → Fetch → Pull → Synced automatically.
+1. **Periodically fetches** remote changes (`git fetch`)
+2. **Detects** when your branch is behind remote
+3. **Automatically pulls** updates (`git pull --rebase --autostash`)
+4. **Stashes** your local changes safely before pulling
+5. **Detects merge conflicts** and shows them in a real-time dashboard
+6. **Supports multiple repositories** in the same workspace
 
----
-
-## 🤯 The Problem
-
-If you work in a team, you know this pain:
-
-❌ You start coding  
-❌ Someone pushes new commits  
-❌ Your branch is now outdated  
-❌ You forget to pull  
-❌ Merge conflicts appear
-
-Or worse:
-
-
-Your branch is behind 'origin/main' by 5 commits
-
-
-Now your workflow is broken.
-
----
-
-## 💡 The Solution
-
-**AutoRepoSync handles everything automatically.**
-
-The extension runs in the background and:
-
-1️⃣ Fetches remote changes  
-2️⃣ Detects if your branch is behind  
-3️⃣ Pulls updates automatically  
-4️⃣ Safely stashes your changes  
-5️⃣ Restores your work after syncing  
-
-You stay focused on coding.
+You never have to remember to pull again.
 
 ---
 
 ## ✨ Features
 
 | Feature | Description |
-|------|-------------|
-| 🔄 Auto Fetch | Periodically checks GitHub for updates |
-| ⚡ Auto Pull | Pulls updates automatically |
-| 📦 Auto Stash | Safely stashes local changes |
-| 🖥 Dashboard | Real-time repo sync dashboard |
-| 📡 Webhook Mode | Instant sync from GitHub pushes |
-| 🗂 Multi Repo | Works with multiple repos |
-| 🔔 Notifications | Optional commit notifications |
-| 📊 Activity Logs | Full sync history |
+|---|---|
+| 🔄 **Auto Sync** | Background polling at a configurable interval (default: 30 s) |
+| 🤫 **Zero-Prompt** | No confirmation dialogs — changes are pulled silently |
+| 📦 **Auto Stash** | Local modifications are stashed and restored automatically |
+| 🖥️ **Dashboard** | Real-time webview showing repo status, conflicts, and logs |
+| 📡 **Webhook Mode** | Optional HTTP server for instant GitHub push-triggered sync |
+| 🗂️ **Multi-Repo** | Detects every `.git` repo in your workspace |
+| 🔔 **Notifications** | Optional popups for new commits and conflicts |
+| 📊 **Activity Log** | Full sync history in the dashboard & VS Code Output Channel |
 
 ---
 
-## 🖥 Dashboard
+## 📸 Dashboard
 
-Monitor all repositories in one place.
+Open via **Command Palette → `AutoRepoSync: Open Dashboard`**
 
-![Dashboard](screenshots/dashboard.png)
+The dashboard shows:
 
-Shows:
+- Repository list with branch, behind/ahead counts, last sync time
+- **Green** = synced · **Yellow** = pulling · **Red** = conflict
+- Buttons: Sync Now, Pause, Resume, Open Repo, View Logs
+- Live activity log
 
-- Repo status
-- Behind/ahead count
-- Last sync
-- Conflict alerts
-- Activity logs
+---
 
-┌─────────────┐
-│ Timer/Event │
-└──────┬──────┘
-│
-▼
-┌─────────────┐
-│ git fetch │
-└──────┬──────┘
-│
-▼
-┌─────────────┐
-│ Compare │
-│ Local/Remote│
-└──────┬──────┘
-│
-▼
-┌─────────────┐
-│ git pull │
-│ --rebase │
-│ --autostash │
-└─────────────┘
+## 🚀 Getting Started
 
-## 🚀 Installation
+### Install from Marketplace
 
-### Install from VS Code Marketplace
-
-1. Open **VS Code**
-2. Go to Extensions (`Ctrl + Shift + X`)
-3. Search **AutoRepoSync**
+1. Open VS Code
+2. Go to **Extensions** (`Ctrl+Shift+X`)
+3. Search for **AutoRepoSync**
 4. Click **Install**
 
----
+### Install from VSIX
 
-### Install via VSIX
+```bash
+code --install-extension autoreposync-1.0.0.vsix
+```
 
+### Requirements
 
-code --install-extension autoreposync.vsix
-
+- **Git** must be installed and available on your PATH
+- VS Code ≥ 1.85.0
 
 ---
 
 ## ⚙️ Configuration
 
-Customize the extension in VS Code settings.
+All settings live under the `autosync.*` namespace in VS Code Settings.
 
-| Setting | Default | Description |
-|-------|--------|-------------|
-| autosync.enabled | true | Enable auto syncing |
-| autosync.interval | 30 | Sync interval (seconds) |
-| autosync.autoStash | true | Stash local changes |
-| autosync.enableWebhookMode | false | Enable webhook sync |
-| autosync.webhookPort | 9090 | Webhook server port |
-| autosync.showNotifications | true | Show notifications |
+| Setting | Type | Default | Description |
+|---|---|---|---|
+| `autosync.enabled` | `boolean` | `true` | Master on/off toggle |
+| `autosync.interval` | `number` | `30` | Polling interval in seconds (5–3600) |
+| `autosync.autoStash` | `boolean` | `true` | Stash local changes before pulling |
+| `autosync.enableWebhookMode` | `boolean` | `false` | Start a local HTTP webhook server |
+| `autosync.webhookPort` | `number` | `9090` | Port for the webhook server |
+| `autosync.showNotifications` | `boolean` | `true` | Show VS Code notification popups |
+| `autosync.logLevel` | `string` | `"info"` | `debug`, `info`, `warn`, or `error` |
 
 ---
 
 ## 🎮 Commands
 
 | Command | Description |
-|------|-------------|
-| AutoRepoSync: Start Sync | Start auto sync |
-| AutoRepoSync: Stop Sync | Stop auto sync |
-| AutoRepoSync: Sync Now | Manual sync |
-| AutoRepoSync: Open Dashboard | Open dashboard |
+|---|---|
+| `AutoRepoSync: Start Sync` | Start the background sync loop |
+| `AutoRepoSync: Stop Sync` | Stop the background sync loop |
+| `AutoRepoSync: Sync Now` | Trigger an immediate sync for all repos |
+| `AutoRepoSync: Open Dashboard` | Open the monitoring dashboard |
 
 ---
 
-## 📡 Webhook Mode
+## 📡 Webhook Mode (Advanced)
 
-Enable instant syncing using GitHub Webhooks.
+For instant sync on push, enable the webhook server:
 
-Steps:
+1. Set `autosync.enableWebhookMode` to `true`
+2. Configure `autosync.webhookPort` (default `9090`)
+3. In your GitHub repo → Settings → Webhooks:
+   - **Payload URL**: `http://<your-ip>:9090/webhook`
+   - **Content type**: `application/json`
+   - **Events**: Just the push event
+4. The extension will instantly sync when a push is received
 
-1️⃣ Enable webhook mode in settings  
-2️⃣ Add webhook in GitHub repo  
-3️⃣ Auto sync triggers instantly on push
-
-Payload URL:
-
-
-http://localhost:9090/webhook
-
+> **Note:** The webhook server listens on all interfaces. Use a reverse proxy or firewall in production.
 
 ---
 
-## 🏗 Architecture
+## 🏗️ Architecture
 
+```
+src/
+├── extension.ts          ← Entry point, wires everything
+├── gitManager.ts         ← Low-level Git CLI wrapper
+├── syncService.ts        ← Periodic sync orchestrator
+├── repoWatcher.ts        ← Workspace repo discovery
+├── webhookServer.ts      ← Optional HTTP webhook server
+├── dashboard/
+│   ├── dashboard.ts      ← Webview panel controller
+│   ├── dashboard.html    ← Dashboard markup
+│   ├── dashboard.css     ← Dashboard styles
+│   └── dashboard.js      ← Dashboard client logic
+└── utils/
+    ├── logger.ts         ← Dual-output logger
+    └── settings.ts       ← Typed config reader
+```
 
-src
-├── extension.ts
-├── gitManager.ts
-├── syncService.ts
-├── repoWatcher.ts
-├── webhookServer.ts
-└── dashboard
+### Sync Engine Flow
 
-
-Modules:
-
-- **Git Manager** → CLI wrapper
-- **Sync Service** → orchestrates sync
-- **Repo Watcher** → detects repositories
-- **Dashboard** → monitoring UI
-- **Webhook Server** → push-triggered sync
+```
+┌──────────┐     ┌──────────┐     ┌──────────┐
+│  Timer / │────▶│  Fetch   │────▶│ Compare  │
+│  Webhook │     │  Remote  │     │ Local vs │
+└──────────┘     └──────────┘     │  Remote  │
+                                  └────┬─────┘
+                                       │
+                          ┌────────────┼────────────┐
+                          ▼            ▼            ▼
+                      Up to date   Behind       Conflict
+                      (no-op)      Pull+Rebase  Notify user
+```
 
 ---
 
-## 🛠 Development
+## 🛠️ Development
 
-Clone the repo:
+### Build from source
 
-
+```bash
 git clone https://github.com/autoreposync/autoreposync.git
-
 cd autoreposync
 npm install
 npm run compile
+```
 
+### Run in VS Code
 
-Run extension:
+1. Open the `autoreposync` folder in VS Code
+2. Press `F5` to launch the Extension Development Host
+3. The extension activates in any workspace with a `.git` directory
 
+### Package
 
-Press F5
-
-
----
-
-## 📦 Package Extension
-
-
+```bash
 npm install -g @vscode/vsce
 vsce package
+```
 
+This produces `autoreposync-1.0.0.vsix`.
 
-Output:
+### Publish
 
-
-autoreposync-1.0.0.vsix
-
-
----
-
-## 📈 Roadmap
-
-Planned features:
-
-- 🤖 AI merge conflict resolution
-- 📢 Slack / Discord alerts
-- 📊 Team sync analytics
-- 🧠 Smart branch awareness
-- 🧾 Commit summaries
+```bash
+vsce publish
+```
 
 ---
 
-## 🤝 Contributing
+## 📋 Changelog
 
-Pull requests are welcome.
-
-Steps:
-
-1. Fork repository
-2. Create feature branch
-3. Submit PR
-
----
-
-## ⭐ Support
-
-If this project helps you, please consider giving it a star ⭐
-
-It helps more developers discover the project.
+See [CHANGELOG.md](CHANGELOG.md).
 
 ---
 
 ## 📄 License
 
-MIT License
+MIT © AutoRepoSync Contributors
