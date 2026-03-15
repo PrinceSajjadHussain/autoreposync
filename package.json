@@ -2,7 +2,7 @@
   "name": "autoreposync",
   "displayName": "AutoRepoSync",
   "description": "Automatically keeps your local Git repository synchronized with its remote GitHub repository. Zero-prompt background sync with smart conflict detection and a real-time monitoring dashboard.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "publisher": "sajjad-ai",
   "license": "MIT",
   "icon": "media/icon.png",
