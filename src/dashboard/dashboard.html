@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+        http-equiv="Content-Security-Policy"
+        content="default-src 'none';
+                 style-src {{cspSource}} 'nonce-{{nonce}}';
+                 script-src 'nonce-{{nonce}}';
+                 font-src {{cspSource}};"
+    />
+    <link rel="stylesheet" href="{{cssUri}}" />
+    <title>AutoRepoSync Dashboard</title>
+</head>
+<body>
+    <!-- ─── Header ────────────────────────────────────────── -->
+    <header class="header">
+        <div class="header-left">
+            <h1 class="header-title">⚡ AutoRepoSync</h1>
+            <span class="header-subtitle" id="serviceStatus">Running</span>
+        </div>
+        <div class="header-actions">
+            <button class="btn btn-primary" id="btnSyncAll" title="Sync all repositories now">
+                🔄 Sync All
+            </button>
+            <button class="btn btn-secondary" id="btnViewLogs" title="Open output channel">
+                📋 View Logs
+            </button>
+        </div>
+    </header>
+
+    <!-- ─── Main grid ─────────────────────────────────────── -->
+    <main class="main">
+        <!-- Repository cards -->
+        <section class="section">
+            <h2 class="section-title">Repositories</h2>
+            <div class="repo-grid" id="repoGrid">
+                <div class="empty-state" id="emptyState">
+                    <p>No Git repositories detected in the workspace.</p>
+                    <p class="muted">Open a folder that contains a <code>.git</code> directory.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Activity log -->
+        <section class="section">
+            <h2 class="section-title">
+                Activity Log
+                <button class="btn btn-small btn-ghost" id="btnClearLogs" title="Clear log display">
+                    Clear
+                </button>
+            </h2>
+            <div class="log-container" id="logContainer">
+                <div class="log-empty">Waiting for activity…</div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ─── Repo card template (cloned via JS) ────────────── -->
+    <template id="repoCardTemplate">
+        <div class="repo-card" data-repo-path="">
+            <!-- Status indicator -->
+            <div class="repo-status-indicator"></div>
+
+            <!-- Info area -->
+            <div class="repo-info">
+                <div class="repo-header">
+                    <h3 class="repo-name"></h3>
+                    <span class="repo-badge"></span>
+                </div>
+                <div class="repo-meta">
+                    <span class="meta-item branch-name">
+                        <span class="meta-label">Branch:</span>
+                        <span class="meta-value" data-field="branch">—</span>
+                    </span>
+                    <span class="meta-item">
+                        <span class="meta-label">Behind:</span>
+                        <span class="meta-value" data-field="behind">0</span>
+                    </span>
+                    <span class="meta-item">
+                        <span class="meta-label">Ahead:</span>
+                        <span class="meta-value" data-field="ahead">0</span>
+                    </span>
+                    <span class="meta-item">
+                        <span class="meta-label">Last sync:</span>
+                        <span class="meta-value" data-field="lastSync">—</span>
+                    </span>
+                </div>
+                <!-- Error / conflict row -->
+                <div class="repo-error" data-field="error" style="display:none"></div>
+                <div class="repo-conflicts" data-field="conflicts" style="display:none"></div>
+            </div>
+
+            <!-- Actions -->
+            <div class="repo-actions">
+                <button class="btn btn-small btn-primary action-sync" title="Sync now">🔄 Sync</button>
+                <button class="btn btn-small btn-warning action-pause" title="Pause auto-sync">⏸ Pause</button>
+                <button class="btn btn-small btn-success action-resume" title="Resume auto-sync" style="display:none">▶ Resume</button>
+                <button class="btn btn-small btn-ghost action-open" title="Open repository folder">📂 Open</button>
+            </div>
+        </div>
+    </template>
+
+    <script nonce="{{nonce}}" src="{{jsUri}}"></script>
+</body>
+</html>

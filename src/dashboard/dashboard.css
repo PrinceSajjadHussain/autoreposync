@@ -1,0 +1,392 @@
+/* ══════════════════════════════════════════════════════════════
+   AutoRepoSync Dashboard — Styles
+   Uses VS Code's CSS custom properties so the dashboard
+   automatically adapts to the user's colour theme.
+   ══════════════════════════════════════════════════════════════ */
+
+/* ─── Reset ─────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--vscode-font-family, system-ui, -apple-system, sans-serif);
+    font-size: var(--vscode-font-size, 13px);
+    color: var(--vscode-foreground);
+    background-color: var(--vscode-editor-background);
+    line-height: 1.5;
+    padding: 0;
+}
+
+code {
+    font-family: var(--vscode-editor-font-family, 'Cascadia Code', Consolas, monospace);
+    background: var(--vscode-textCodeBlock-background, rgba(127,127,127,.15));
+    padding: 1px 4px;
+    border-radius: 3px;
+}
+
+/* ─── Header ────────────────────────────────────────────────── */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 24px;
+    background: var(--vscode-sideBar-background);
+    border-bottom: 1px solid var(--vscode-panel-border, rgba(127,127,127,.2));
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.header-left {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+}
+
+.header-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--vscode-foreground);
+}
+
+.header-subtitle {
+    font-size: 12px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    background: var(--vscode-badge-background, #007acc);
+    color: var(--vscode-badge-foreground, #fff);
+}
+
+.header-actions {
+    display: flex;
+    gap: 8px;
+}
+
+/* ─── Buttons ───────────────────────────────────────────────── */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 14px;
+    border: none;
+    border-radius: 4px;
+    font-size: 12px;
+    font-family: inherit;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: opacity 0.15s;
+}
+
+.btn:hover {
+    opacity: 0.85;
+}
+
+.btn:active {
+    opacity: 0.7;
+}
+
+.btn-primary {
+    background: var(--vscode-button-background, #007acc);
+    color: var(--vscode-button-foreground, #fff);
+}
+
+.btn-secondary {
+    background: var(--vscode-button-secondaryBackground, #3a3d41);
+    color: var(--vscode-button-secondaryForeground, #fff);
+}
+
+.btn-success {
+    background: #2ea043;
+    color: #fff;
+}
+
+.btn-warning {
+    background: #d29922;
+    color: #fff;
+}
+
+.btn-danger {
+    background: #da3633;
+    color: #fff;
+}
+
+.btn-ghost {
+    background: transparent;
+    color: var(--vscode-foreground);
+    border: 1px solid var(--vscode-panel-border, rgba(127,127,127,.3));
+}
+
+.btn-small {
+    padding: 3px 10px;
+    font-size: 11px;
+}
+
+/* ─── Main layout ───────────────────────────────────────────── */
+.main {
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+.section-title {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* ─── Repository grid ──────────────────────────────────────── */
+.repo-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--vscode-descriptionForeground);
+}
+
+.empty-state .muted {
+    margin-top: 6px;
+    font-size: 12px;
+    opacity: 0.7;
+}
+
+/* ─── Repo card ─────────────────────────────────────────────── */
+.repo-card {
+    display: grid;
+    grid-template-columns: 6px 1fr auto;
+    gap: 14px;
+    align-items: start;
+    padding: 14px 16px;
+    background: var(--vscode-editorWidget-background, var(--vscode-sideBar-background));
+    border: 1px solid var(--vscode-panel-border, rgba(127,127,127,.15));
+    border-radius: 6px;
+    transition: border-color 0.2s;
+}
+
+.repo-card:hover {
+    border-color: var(--vscode-focusBorder, #007acc);
+}
+
+/* Status bar on the left edge */
+.repo-status-indicator {
+    width: 6px;
+    border-radius: 3px;
+    align-self: stretch;
+    background: var(--vscode-descriptionForeground);
+    transition: background 0.3s;
+}
+
+.repo-card[data-status="synced"] .repo-status-indicator {
+    background: #2ea043;
+}
+
+.repo-card[data-status="behind"] .repo-status-indicator,
+.repo-card[data-status="pulling"] .repo-status-indicator {
+    background: #d29922;
+}
+
+.repo-card[data-status="conflict"] .repo-status-indicator {
+    background: #da3633;
+}
+
+.repo-card[data-status="diverged"] .repo-status-indicator {
+    background: #a371f7;
+}
+
+.repo-card[data-status="ahead"] .repo-status-indicator {
+    background: #58a6ff;
+}
+
+/* Info block */
+.repo-info {
+    min-width: 0;
+}
+
+.repo-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+}
+
+.repo-name {
+    font-size: 14px;
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.repo-badge {
+    font-size: 10px;
+    padding: 1px 7px;
+    border-radius: 10px;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.repo-badge.synced   { background: #2ea04330; color: #2ea043; }
+.repo-badge.behind   { background: #d2992230; color: #d29922; }
+.repo-badge.pulling  { background: #d2992230; color: #d29922; }
+.repo-badge.conflict { background: #da363330; color: #da3633; }
+.repo-badge.diverged { background: #a371f730; color: #a371f7; }
+.repo-badge.ahead    { background: #58a6ff30; color: #58a6ff; }
+.repo-badge.unknown  { background: rgba(127,127,127,.2); color: var(--vscode-descriptionForeground); }
+
+/* Meta items */
+.repo-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 16px;
+    font-size: 12px;
+    color: var(--vscode-descriptionForeground);
+}
+
+.meta-label {
+    opacity: 0.7;
+}
+
+.meta-value {
+    font-weight: 500;
+    color: var(--vscode-foreground);
+}
+
+/* Error & conflict rows */
+.repo-error {
+    margin-top: 8px;
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    background: #da363320;
+    color: #f85149;
+}
+
+.repo-conflicts {
+    margin-top: 6px;
+    font-size: 11px;
+    color: #f85149;
+}
+
+.repo-conflicts ul {
+    list-style: none;
+    padding-left: 12px;
+}
+
+.repo-conflicts li::before {
+    content: '• ';
+}
+
+/* Action buttons */
+.repo-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: stretch;
+}
+
+/* Spinning indicator for syncing cards */
+.repo-card.syncing .action-sync {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+
+.repo-card.syncing .action-sync::before {
+    content: '';
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border: 2px solid rgba(255,255,255,.3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin-right: 4px;
+}
+
+/* ─── Log container ─────────────────────────────────────────── */
+.log-container {
+    max-height: 320px;
+    overflow-y: auto;
+    background: var(--vscode-terminal-background, var(--vscode-editor-background));
+    border: 1px solid var(--vscode-panel-border, rgba(127,127,127,.15));
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-family: var(--vscode-editor-font-family, monospace);
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+.log-empty {
+    text-align: center;
+    padding: 20px;
+    color: var(--vscode-descriptionForeground);
+    opacity: 0.6;
+}
+
+.log-entry {
+    display: flex;
+    gap: 8px;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.log-time {
+    color: var(--vscode-descriptionForeground);
+    flex-shrink: 0;
+}
+
+.log-level {
+    flex-shrink: 0;
+    font-weight: 600;
+    width: 44px;
+    text-align: right;
+}
+
+.log-level.DEBUG { color: var(--vscode-descriptionForeground); }
+.log-level.INFO  { color: #58a6ff; }
+.log-level.WARN  { color: #d29922; }
+.log-level.ERROR { color: #f85149; }
+
+.log-repo {
+    color: #a371f7;
+    flex-shrink: 0;
+}
+
+.log-message {
+    color: var(--vscode-foreground);
+}
+
+/* ─── Scrollbar ─────────────────────────────────────────────── */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--vscode-scrollbarSlider-background, rgba(127,127,127,.3));
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--vscode-scrollbarSlider-hoverBackground, rgba(127,127,127,.5));
+}

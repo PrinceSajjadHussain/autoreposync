@@ -1,0 +1,120 @@
+{
+  "name": "autoreposync",
+  "displayName": "AutoRepoSync",
+  "description": "Automatically keeps your local Git repository synchronized with its remote GitHub repository. Zero-prompt background sync with smart conflict detection and a real-time monitoring dashboard.",
+  "version": "1.0.0",
+  "publisher": "sajjad-ai",
+  "license": "MIT",
+  "icon": "media/icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/autoreposync/autoreposync"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "SCM Providers",
+    "Other"
+  ],
+  "keywords": [
+    "git",
+    "sync",
+    "auto-pull",
+    "github",
+    "repository",
+    "auto-sync",
+    "merge",
+    "remote"
+  ],
+  "activationEvents": [
+    "workspaceContains:.git",
+    "workspaceContains:**/.git"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "AutoRepoSync.start",
+        "title": "AutoRepoSync: Start Sync"
+      },
+      {
+        "command": "AutoRepoSync.stop",
+        "title": "AutoRepoSync: Stop Sync"
+      },
+      {
+        "command": "AutoRepoSync.syncNow",
+        "title": "AutoRepoSync: Sync Now"
+      },
+      {
+        "command": "AutoRepoSync.openDashboard",
+        "title": "AutoRepoSync: Open Dashboard"
+      }
+    ],
+    "configuration": {
+      "title": "AutoRepoSync",
+      "properties": {
+        "autosync.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable or disable automatic repository synchronization."
+        },
+        "autosync.interval": {
+          "type": "number",
+          "default": 30,
+          "minimum": 5,
+          "maximum": 3600,
+          "description": "Sync check interval in seconds (default: 30)."
+        },
+        "autosync.autoStash": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically stash local changes before pulling."
+        },
+        "autosync.enableWebhookMode": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enable webhook server for instant push-triggered sync."
+        },
+        "autosync.webhookPort": {
+          "type": "number",
+          "default": 9090,
+          "minimum": 1024,
+          "maximum": 65535,
+          "description": "Port for the webhook server (default: 9090)."
+        },
+        "autosync.showNotifications": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show notification popups for sync events."
+        },
+        "autosync.logLevel": {
+          "type": "string",
+          "default": "info",
+          "enum": ["debug", "info", "warn", "error"],
+          "description": "Log verbosity level."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "lint": "eslint src --ext ts",
+    "package": "vsce package",
+    "publish": "vsce publish"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/vscode": "^1.85.0",
+    "@typescript-eslint/eslint-plugin": "^6.15.0",
+    "@typescript-eslint/parser": "^6.15.0",
+    "eslint": "^8.56.0",
+    "typescript": "^5.3.3",
+    "@vscode/vsce": "^2.22.0"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

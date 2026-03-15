@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0078d4;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#005a9e;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="arrow" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e0e0e0;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <!-- Background rounded square -->
+  <rect x="4" y="4" width="120" height="120" rx="24" ry="24" fill="url(#bg)" />
+  <!-- Sync circle arrows -->
+  <g transform="translate(64,64)">
+    <!-- Outer circular arrow (clockwise) -->
+    <path d="M 0,-34 A 34,34 0 1,1 -29.4,-17"
+          fill="none" stroke="url(#arrow)" stroke-width="7" stroke-linecap="round" />
+    <polygon points="-22,-27 -33,-14 -22,-14" fill="white" />
+    <!-- Inner circular arrow (counter-clockwise) -->
+    <path d="M 0,34 A 34,34 0 1,1 29.4,17"
+          fill="none" stroke="url(#arrow)" stroke-width="7" stroke-linecap="round" opacity="0.7" />
+    <polygon points="22,27 33,14 22,14" fill="white" opacity="0.7" />
+    <!-- Git branch dot -->
+    <circle cx="0" cy="0" r="6" fill="#ffffff" />
+  </g>
+  <!-- Lightning bolt (auto) -->
+  <g transform="translate(92,18) scale(0.6)">
+    <polygon points="10,0 0,22 10,22 6,38 24,14 14,14 18,0" fill="#ffd700" />
+  </g>
+</svg>
