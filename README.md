@@ -1,4 +1,4 @@
-# ⚡ AutoRepoSync
+# ⚡ AutoRepoSync Sajjad
 
 **Automatically keep your local Git repositories synchronized with their remote GitHub repositories — zero prompts, zero hassle.**
 
