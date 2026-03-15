@@ -86,11 +86,6 @@ Shows:
 - Conflict alerts
 - Activity logs
 
----
-
-## ⚙️ How It Works
-
-
 ┌─────────────┐
 │ Timer/Event │
 └──────┬──────┘
@@ -112,9 +107,6 @@ Shows:
 │ --rebase │
 │ --autostash │
 └─────────────┘
-
-
----
 
 ## 🚀 Installation
 
