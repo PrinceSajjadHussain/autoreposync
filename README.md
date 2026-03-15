@@ -1,5 +1,5 @@
 🚀 AutoRepoSync 
-# ⚡ AutoRepoSync
+# ⚡ AutoRepoSync Sajjad
 
 > Never forget to pull again.
 
